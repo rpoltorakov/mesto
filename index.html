@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./pages/index.css">
+  <title>Document</title>
+</head>
+<body class="root">
+  <div class="page">
+    <header class="header">
+      <img class="header__logo" src="./images/logo.svg" alt="Проект Место">
+    </header>
+    <main class="content">
+      <section class="profile">
+        <img src="./images/kusto-profile-pic.png" alt="" class="profile__avatar">
+        <div class="profile__profile-info">
+          <div class="profile__title-container">
+            <div class="profile__title">Жак-Ив Кусто</div>
+            <button class="profile__edit-button" type="button"></button>
+          </div>
+          <p class="profile__subtitle">Исследователь океана</p>
+        </div>
+        <div class="profile__add-button" type="button"></div>
+      </section>
+      <section class="elements">
+        <div class="element element_id_1">
+          <div class="element__title">
+            <div class="element__title-text">Карачаевск</div>
+            <button class="element__like-button" type="button"></button>
+          </div>
+        </div>
+        <div class="element element_id_2">
+          <div class="element__title">
+            <div class="element__title-text">Гора Эльбрус</div>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+        <div class="element element_id_3">
+          <div class="element__title">
+            <div class="element__title-text">Домбай</div>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+        <div class="element element_id_2">
+          <div class="element__title">
+            <div class="element__title-text">Гора Эльбрус</div>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+        <div class="element element_id_3">
+          <div class="element__title">
+            <div class="element__title-text">Домбай</div>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+        <div class="element element_id_1">
+          <div class="element__title">
+            <div class="element__title-text">Карачаево-Черкессия</div>
+            <button class="element__like-button"></button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      &copy; 2020 Mesto Russia
+    </footer>
+    <div class="popup">
+      <div class="popup__container ">
+        <button class="popup__close-button"></button>
+        <div class="popup__header">Редактировать профиль</div>
+        <form action="" class="popup__form">
+          <input minlength="2" maxlength="40" name="name" class="popup__title" value="" placeholder="Имя" required>
+          <input minlength="2" maxlength="200" name="about" class="popup__subtitle" value="" placeholder="О себе" required>
+          <button type="submit" class="popup__save-button">Сохранить</button>
+        </form>
+        
+      </div>
+    </div>
+    
+  </div>
+  <script src="./pages/script.js"></script>
+</body>
+</html>
