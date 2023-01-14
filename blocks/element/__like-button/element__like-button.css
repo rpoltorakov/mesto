@@ -9,7 +9,7 @@
   margin: 0;
   padding: 0;
   background-color: transparent;
-  align-self: flex-end;
+  align-self: center;
   transition: opacity .1s ease-in-out;
 }
 
