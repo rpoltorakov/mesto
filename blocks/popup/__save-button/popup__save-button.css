@@ -12,11 +12,11 @@
   cursor: pointer;
   border-radius: 2px;
   border: none;
-  transition: background-color .1s ease-in-out;
+  transition: opacity .1s ease-in-out;
 }
 
 .popup__save-button:hover {
-  background-color: #313131;
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 550px) {

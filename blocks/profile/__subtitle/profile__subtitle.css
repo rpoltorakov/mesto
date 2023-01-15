@@ -18,8 +18,5 @@
     line-height: 17px;
     max-width: 272px;
     text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
   }
 }
