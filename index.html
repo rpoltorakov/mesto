@@ -15,52 +15,18 @@
     <main class="content">
       <section class="profile">
         <img src="./images/kusto-profile-pic.png" alt="Аватар" class="profile__avatar">
-        <div class="profile__profile-info">
+        <href class="profile__profile-info">
           <div class="profile__title-container">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
             <button class="profile__edit-button" type="button" aria-label="Редактировать профиль"></button>
           </div>
           <p class="profile__subtitle">Исследователь океана</p>
-        </div>
+        </href>
         <button class="profile__add-button" type="button" aria-label="Добавить место"></button>
       </section>
       <section class="elements">
-        <div class="element element_id_karachaevsk">
-          <div class="element__title">
-            <h3 class="element__title-text">Карачаевск</h3>
-            <button class="element__like-button" type="button" aria-label="Лайк"></button>
-          </div>
-        </div>
-        <div class="element element_id_elbrus">
-          <div class="element__title">
-            <h3 class="element__title-text">Гора Эльбрус</h3>
-            <button class="element__like-button" type="button" aria-label="Лайк"></button>
-          </div>
-        </div>
-        <div class="element element_id_dombay">
-          <div class="element__title">
-            <h3 class="element__title-text">Домбай</h3>
-            <button class="element__like-button" type="button" aria-label="Лайк"></button>
-          </div>
-        </div>
-        <div class="element element_id_elbrus">
-          <div class="element__title">
-            <h3 class="element__title-text">Гора Эльбрус</h3>
-            <button class="element__like-button" type="button" aria-label="Лайк"></button>
-          </div>
-        </div>
-        <div class="element element_id_dombay">
-          <div class="element__title">
-            <h3 class="element__title-text">Домбай</h3>
-            <button class="element__like-button" type="button" aria-label="Лайк"></button>
-          </div>
-        </div>
-        <div class="element element_id_karachaevsk">
-          <div class="element__title">
-            <h3 class="element__title-text">Карачаево-Черкессия</h3>
-            <button class="element__like-button" type="button" aria-label="Лайк"></button>
-          </div>
-        </div>
+        
+        
       </section>
     </main>
     <footer class="footer">
@@ -77,6 +43,12 @@
         </form>
       </div>
     </div>
+    <template class="element">
+      <div class="element__title">
+        <h3 class="element__title-text"></h3>
+        <button class="element__like-button" type="button" aria-label="Лайк"></button>
+      </div>
+    </template>
   </div>
 <script src="./scripts/index.js"></script>
 </body>
