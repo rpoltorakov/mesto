@@ -18,9 +18,7 @@
 @import url(../blocks/element/__like-button/element__like-button.css);
 @import url(../blocks/element/__title/element__title.css);
 @import url(../blocks/element/__title-text/element__title-text.css);
-@import url(../blocks/element/_id/element_id_karachaevsk.css);
-@import url(../blocks/element/_id/element_id_elbrus.css);
-@import url(../blocks/element/_id/element_id_dombay.css);
+@import url(../blocks/element/__delete-button/element__delete-button.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/__container/popup__container.css);
