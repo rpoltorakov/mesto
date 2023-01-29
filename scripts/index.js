@@ -1,4 +1,4 @@
-const elementTemplate = document.querySelector('.element-template').content
+const elementTemplate = document.querySelector('.element-template').content.querySelector('.element')
 const elementsContainer = document.querySelector('.elements')
 
 const editProfileButton = document.querySelector('.profile__edit-button')
@@ -22,72 +22,57 @@ const picImagePopup = imagePopup.querySelector('.popup__image')
 const subtitleImagePopup = imagePopup.querySelector('.popup__subtitle')
 const buttonCloseImagePopup = imagePopup.querySelector('.popup__close-button_target_image')
 
-const buttonLike = document.querySelector('.element__like-button')
+function openPopup(popupNode) {
+  popupNode.classList.add('popup_opened')
+}
 
-const initialElements = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
+function closePopup(popupNode) {
+  popupNode.classList.remove('popup_opened')
+}
 
 function showImagePopup(evt) {
-  imagePopup.classList.add('popup_opened')
+  openPopup(imagePopup)
   picImagePopup.src = evt.target.src
-  subtitleImagePopup.textContent = evt.target.alt
+  picImagePopup.alt = 'Карточка в полный размер'
+  subtitleImagePopup.textContent = evt.target.parentElement.querySelector('.element__title').textContent
 }
 function closeImagePopup() {
-  imagePopup.classList.remove('popup_opened')
+  closePopup(imagePopup)
 }
 
 function toggleLikeButton(evt) {
   evt.target.classList.toggle('element__like-button_pressed')
 }
 
-function removeParent(evt) {
-  evt.target.parentNode.remove()
+function removeCard(evt) {
+  evt.target.parentElement.remove()
+}
+
+function createCard(name, link) {
+  const element = elementTemplate.cloneNode(true)
+  element.querySelector('.element__title-text').textContent = name;
+  const elementImage = element.querySelector('.element__image')
+  elementImage.src = link;
+  elementImage.alt = name;
+  elementImage.addEventListener('click', showImagePopup)
+  element.querySelector('.element__like-button').addEventListener('click', toggleLikeButton)
+  element.querySelector('.element__delete-button').addEventListener('click', removeCard)
+  elementsContainer.prepend(element);
 }
 
 function loadInitialElements(elements) {
   elements.forEach(item => {
-    const element = elementTemplate.querySelector('.element').cloneNode(true);
-    element.querySelector('.element__title-text').textContent = item.name;
-    element.querySelector('.element__image').src = item.link;
-    element.querySelector('.element__image').alt = item.name;
-    element.querySelector('.element__image').addEventListener('click', showImagePopup)
-    element.querySelector('.element__like-button').addEventListener('click', toggleLikeButton)
-    element.querySelector('.element__delete-button').addEventListener('click', removeParent)
-    elementsContainer.prepend(element);
+    createCard(item.name, item.link)
   })
 }
 
 function showProfilePopup() {
-  editProfilePopup.classList.add('popup_opened')
+  openPopup(editProfilePopup)
   inputTitleProfilePopup.value = profileTitle.textContent
   inputSubtitleProfilePopup.value = profileSubtitle.textContent
 }
 function closeProfilePopup() {
-  editProfilePopup.classList.remove('popup_opened')
+  closePopup(editProfilePopup)
 }
 function handleProfileFormSubmit (evt) {
   evt.preventDefault();
@@ -97,23 +82,16 @@ function handleProfileFormSubmit (evt) {
 }
 
 function showElementPopup() {
-  addElementPopup.classList.add('popup_opened')
+  openPopup(addElementPopup)
 }
 function closeElementPopup() {
-  addElementPopup.classList.remove('popup_opened')
+  closePopup(addElementPopup)
 }
 function handleElementFormSubmit (evt) {
   evt.preventDefault()
-  const newElement = elementTemplate.querySelector('.element').cloneNode(true)
-  newElement.querySelector('.element__title-text').textContent = inputTitleElementPopup.value;
-  newElement.querySelector('.element__image').src = inputImageElementPopup.value;
-  newElement.querySelector('.element__image').alt = inputTitleElementPopup.value;
-  elementsContainer.prepend(newElement);
-  newElement.querySelector('.element__like-button').addEventListener('click', toggleLikeButton)
-  newElement.querySelector('.element__delete-button').addEventListener('click', removeParent)
+  createCard(inputTitleElementPopup.value, inputImageElementPopup.value)
   closeElementPopup();
-  inputImageElementPopup.value = ''
-  inputTitleElementPopup.value = ''
+  formElementPopup.reset()
 }
 
 loadInitialElements(initialElements)

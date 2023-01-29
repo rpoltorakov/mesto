@@ -35,8 +35,8 @@
         <button type="button" class="popup__close-button popup__close-button_target_element" aria-label="Закрыть"></button>
         <h2 class="popup__header">Новое место</h2>
         <form class="popup__form popup__form_target_element" name="add-element">
-          <input minlength="2" maxlength="40" name="name" class="popup__input popup__input_target_element-title" value="" placeholder="Название" required>
-          <input minlength="2" maxlength="200" name="about" class="popup__input popup__input_target_element-image" value="" placeholder="Ссылка на картинку" required>
+          <input minlength="2" maxlength="40" name="name" class="popup__input popup__input_target_element-title" placeholder="Название" required>
+          <input type="url" minlength="2" maxlength="200" name="about" class="popup__input popup__input_target_element-image" placeholder="Ссылка на картинку" required>
           <button type="submit" class="popup__save-button" aria-label="Сохранить">Создать</button>
         </form>
       </div>
@@ -46,8 +46,8 @@
         <button type="button" class="popup__close-button popup__close-button_target_profile" aria-label="Закрыть"></button>
         <h2 class="popup__header">Редактировать профиль</h2>
         <form class="popup__form popup__form_target_profile" name="edit-profile">
-          <input minlength="2" maxlength="40" name="name" class="popup__input popup__input_target_profile-title" value="" placeholder="Имя" required>
-          <input minlength="2" maxlength="200" name="about" class="popup__input popup__input_target_profile-subtitle" value="" placeholder="О себе" required>
+          <input minlength="2" maxlength="40" name="name" class="popup__input popup__input_target_profile-title" placeholder="Имя" required>
+          <input minlength="2" maxlength="200" name="about" class="popup__input popup__input_target_profile-subtitle" placeholder="О себе" required>
           <button type="submit" class="popup__save-button" aria-label="Сохранить">Сохранить</button>
         </form>
       </div>
@@ -72,6 +72,7 @@
       </div>
     </template>
   </div>
+<script src="./scripts/constants.js"></script>
 <script src="./scripts/index.js"></script>
 </body>
 </html>
