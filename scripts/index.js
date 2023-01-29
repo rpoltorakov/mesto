@@ -1,23 +1,28 @@
-let elementTemplate = document.querySelector('.element-template').content
-let elementsContainer = document.querySelector('.elements')
+const elementTemplate = document.querySelector('.element-template').content
+const elementsContainer = document.querySelector('.elements')
 
-let editProfileButton = document.querySelector('.profile__edit-button')
-let profileTitle = document.querySelector('.profile__title')
-let profileSubtitle = document.querySelector('.profile__subtitle')
-let editProfilePopup = document.querySelector('.popup_target_profile')
-let inputTitleProfilePopup = editProfilePopup.querySelector('.popup__input_target_profile-title')
-let inputSubtitleProfilePopup = editProfilePopup.querySelector('.popup__input_target_profile-subtitle')
-let formProfilePopup = document.querySelector('.popup__form_target_profile')
-let buttonCloseProfilePopup = document.querySelector('.popup__close-button_target_profile')
+const editProfileButton = document.querySelector('.profile__edit-button')
+const profileTitle = document.querySelector('.profile__title')
+const profileSubtitle = document.querySelector('.profile__subtitle')
+const editProfilePopup = document.querySelector('.popup_target_profile')
+const inputTitleProfilePopup = editProfilePopup.querySelector('.popup__input_target_profile-title')
+const inputSubtitleProfilePopup = editProfilePopup.querySelector('.popup__input_target_profile-subtitle')
+const formProfilePopup = document.querySelector('.popup__form_target_profile')
+const buttonCloseProfilePopup = document.querySelector('.popup__close-button_target_profile')
 
-let addElementButton = document.querySelector('.profile__add-button')
-let addElementPopup = document.querySelector('.popup_target_element')
-let inputTitleElementPopup = addElementPopup.querySelector('.popup__input_target_element-title')
-let inputImageElementPopup = addElementPopup.querySelector('.popup__input_target_element-image')
-let formElementPopup = document.querySelector('.popup__form_target_element')
-let buttonCloseElementPopup = document.querySelector('.popup__close-button_target_element')
+const addElementButton = document.querySelector('.profile__add-button')
+const addElementPopup = document.querySelector('.popup_target_element')
+const inputTitleElementPopup = addElementPopup.querySelector('.popup__input_target_element-title')
+const inputImageElementPopup = addElementPopup.querySelector('.popup__input_target_element-image')
+const formElementPopup = document.querySelector('.popup__form_target_element')
+const buttonCloseElementPopup = document.querySelector('.popup__close-button_target_element')
 
+const imagePopup = document.querySelector('.popup_target_image')
+const picImagePopup = imagePopup.querySelector('.popup__image')
+const subtitleImagePopup = imagePopup.querySelector('.popup__subtitle')
+const buttonCloseImagePopup = imagePopup.querySelector('.popup__close-button_target_image')
 
+const buttonLike = document.querySelector('.element__like-button')
 
 const initialElements = [
   {
@@ -46,17 +51,35 @@ const initialElements = [
   }
 ]; 
 
+function showImagePopup(evt) {
+  imagePopup.classList.add('popup_opened')
+  picImagePopup.src = evt.target.src
+  subtitleImagePopup.textContent = evt.target.alt
+}
+function closeImagePopup() {
+  imagePopup.classList.remove('popup_opened')
+}
+
+function toggleLikeButton(evt) {
+  evt.target.classList.toggle('element__like-button_pressed')
+}
+
+function removeParent(evt) {
+  evt.target.parentNode.remove()
+}
+
 function loadInitialElements(elements) {
   elements.forEach(item => {
-    let element = elementTemplate.querySelector('.element').cloneNode(true);
+    const element = elementTemplate.querySelector('.element').cloneNode(true);
     element.querySelector('.element__title-text').textContent = item.name;
     element.querySelector('.element__image').src = item.link;
     element.querySelector('.element__image').alt = item.name;
-    element.querySelector('.element__delete-button').addEventListener('click', evt => {evt.target.parentNode.remove()})
-    elementsContainer.prepend(element); 
+    element.querySelector('.element__image').addEventListener('click', showImagePopup)
+    element.querySelector('.element__like-button').addEventListener('click', toggleLikeButton)
+    element.querySelector('.element__delete-button').addEventListener('click', removeParent)
+    elementsContainer.prepend(element);
   })
 }
-loadInitialElements(initialElements)
 
 function showProfilePopup() {
   editProfilePopup.classList.add('popup_opened')
@@ -81,19 +104,19 @@ function closeElementPopup() {
 }
 function handleElementFormSubmit (evt) {
   evt.preventDefault()
-  let newElement = elementTemplate.querySelector('.element').cloneNode(true)
+  const newElement = elementTemplate.querySelector('.element').cloneNode(true)
   newElement.querySelector('.element__title-text').textContent = inputTitleElementPopup.value;
   newElement.querySelector('.element__image').src = inputImageElementPopup.value;
   newElement.querySelector('.element__image').alt = inputTitleElementPopup.value;
-  elementsContainer.prepend(newElement); 
-  newElement.querySelector('.element__delete-button').addEventListener('click', evt => {evt.target.parentNode.remove()})
+  elementsContainer.prepend(newElement);
+  newElement.querySelector('.element__like-button').addEventListener('click', toggleLikeButton)
+  newElement.querySelector('.element__delete-button').addEventListener('click', removeParent)
   closeElementPopup();
   inputImageElementPopup.value = ''
   inputTitleElementPopup.value = ''
 }
 
-
-
+loadInitialElements(initialElements)
 
 editProfileButton.addEventListener('click', showProfilePopup)
 buttonCloseProfilePopup.addEventListener('click', closeProfilePopup)
@@ -102,3 +125,5 @@ formProfilePopup.addEventListener('submit', handleProfileFormSubmit);
 addElementButton.addEventListener('click', showElementPopup)
 buttonCloseElementPopup.addEventListener('click', closeElementPopup)
 formElementPopup.addEventListener('submit', handleElementFormSubmit)
+
+buttonCloseImagePopup.addEventListener('click', closeImagePopup)
