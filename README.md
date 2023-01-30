@@ -27,4 +27,4 @@
 
 ## Технологии
 
-*pure HTML+CSS+JavaScript*
+*HTML+CSS+JavaScript*

@@ -47,7 +47,6 @@ function toggleLikeButton(evt) {
 function removeCard(evt) {
   evt.target.closest('.element').remove()
 }
-
 function createCard(name, link) {
   const element = elementTemplate.cloneNode(true)
   element.querySelector('.element__title-text').textContent = name;
