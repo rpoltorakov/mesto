@@ -45,7 +45,7 @@ function toggleLikeButton(evt) {
 }
 
 function removeCard(evt) {
-  evt.target.parentElement.remove()
+  evt.target.closest('.element').remove()
 }
 
 function createCard(name, link) {
@@ -57,12 +57,17 @@ function createCard(name, link) {
   elementImage.addEventListener('click', showImagePopup)
   element.querySelector('.element__like-button').addEventListener('click', toggleLikeButton)
   element.querySelector('.element__delete-button').addEventListener('click', removeCard)
-  elementsContainer.prepend(element);
+  return element
+}
+
+function renderCard(name, link) {
+  let newCard = createCard(name, link)
+  elementsContainer.prepend(newCard);
 }
 
 function loadInitialElements(elements) {
   elements.forEach(item => {
-    createCard(item.name, item.link)
+    renderCard(item.name, item.link)
   })
 }
 
@@ -89,7 +94,7 @@ function closeElementPopup() {
 }
 function handleElementFormSubmit (evt) {
   evt.preventDefault()
-  createCard(inputTitleElementPopup.value, inputImageElementPopup.value)
+  renderCard(inputTitleElementPopup.value, inputImageElementPopup.value)
   closeElementPopup();
   formElementPopup.reset()
 }
