@@ -60,7 +60,7 @@ function createCard(name, link) {
 }
 
 function renderCard(name, link) {
-  let newCard = createCard(name, link)
+  const newCard = createCard(name, link)
   elementsContainer.prepend(newCard);
 }
 

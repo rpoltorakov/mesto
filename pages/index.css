@@ -33,3 +33,32 @@
 @import url(../blocks/popup/_target/popup_target_image.css);
 @import url(../blocks/popup/__subtitle/popup__subtitle.css);
 @import url(../blocks/popup/__image-container/popup__image-container.css);
+
+.popup__input-error {
+  visibility: hidden;
+}
+
+.popup__input_target_profile-error {
+  visibility: visible;
+}
+
+.popup__input_type_error {
+  border-bottom-color: #FF0000;
+}
+
+.popup__input-error_active {
+  visibility: visible;
+}
+
+.popup__input-error {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FF0000;
+}
+
+.popup__save-button_inactive {
+  background-color: gray;
+  cursor: default;
+  pointer-events: none;
+}
