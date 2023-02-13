@@ -8,9 +8,6 @@ const validationListProfile = {
   errorClass: 'popup__input-error_active'
 }
 
-
-console.log(Object.values(vl.forms.form))
-
 function showInputError(formElement, inputElement, errorMessage, validationList) {
   const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
   inputElement.classList.add(validationList.inputErrorClass);
