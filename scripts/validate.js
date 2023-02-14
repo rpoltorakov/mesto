@@ -1,8 +1,24 @@
-const validationListProfile = {
-  formProfilePopup: '.popup__form_target_profile',
-  inputTitleProfilePopup: '.popup__input_target_profile-title',
-  inputSubtitleProfilePopup: '.popup__input_target_profile-subtitle',
-  submitButtonSelector: '.popup__save-button_target_profile',
+const validationList = {
+  forms: {
+    profileForm: {
+      name: 'edit-profile',
+      form: '.popup__form_target_profile',
+      submitButton: '.popup__save-button_target_profile',
+      inputs: {
+        inputTitleProfilePopup: '.popup__input_target_profile-title',
+        inputSubtitleProfilePopup: '.popup__input_target_profile-subtitle',
+      },
+    },
+    cardForm: {
+      name: 'add-card',
+      form: '.popup__form_target_element',
+      submitButton: '.popup__save-button_target_element',
+      inputs: {
+        inputTitleCardPopup: '.popup__input_target_element-title',
+        inputURLCardPopup: '.popup__input_target_element-image'
+      },
+    },
+  },
   inactiveButtonClass: 'popup__save-button_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active'
@@ -43,25 +59,34 @@ function toggleButtonState (inputList, buttonElement, validationList) {
   }
 }
 
-function createElements(Obj) {
+function createDOMElements(Obj) {
   Object.keys(Obj).forEach(item => {
-    if (Obj[item].startsWith('.')) {
-      Obj[item] = document.querySelector(Obj[item])
+    if (typeof Obj[item] === 'string') {
+      if (Obj[item].startsWith('.')) {
+        Obj[item] = document.querySelector(Obj[item])
+      }
     }
   })
 }
 
 function enableValidation(validationList) {
-  createElements(validationList)
-  console.log(validationList)
-  const inputElements = [validationList.inputTitleProfilePopup, validationList.inputSubtitleProfilePopup]
-  inputElements.forEach(inputElement => {
-    inputElement.addEventListener('input', () => {
-      checkInputValidity(validationList.formProfilePopup, inputElement, validationList)
-      toggleButtonState(inputElements, validationList.submitButtonSelector, validationList)
+  const forms = Object.values(validationList.forms)
+  forms.forEach(formObj => {
+    createDOMElements(formObj)
+    createDOMElements(formObj.inputs)
+    let inputElements = Object.values(formObj.inputs)
+    let buttonElement = formObj.submitButton
+    inputElements.forEach(inputElement => {
+      inputElement.addEventListener('input', () => {
+        checkInputValidity(formObj.form, inputElement, validationList)
+        toggleButtonState(inputElements, buttonElement, validationList)
+      })
     })
+    if (formObj.name === 'add-card') {
+      toggleButtonState(inputElements, buttonElement, validationList)
+    }
+    
   })
-  toggleButtonState(inputElements, validationList.submitButtonSelector, validationList)
 }
 
-enableValidation(validationListProfile)
+enableValidation(validationList)

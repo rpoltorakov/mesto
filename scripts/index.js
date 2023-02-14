@@ -98,14 +98,41 @@ function handleElementFormSubmit (evt) {
   formElementPopup.reset()
 }
 
+function checkTargetIsPopup(evt) {
+  return Array.from(evt.target.classList).includes('popup')
+}
+function closePopupByOutsideClick(evt, closeFunction) {
+  if (checkTargetIsPopup(evt)) {
+    closeFunction()
+  }
+}
+
+function checkPopupOpened(popup) {
+  return Array.from(popup.classList).includes('popup_opened')
+}
+function closePopupByEsc(evt) {
+  if (evt.key==='Escape') {
+    const popups = Array.from(document.querySelectorAll('.popup'))
+    popups.forEach(popup => {
+      if (checkPopupOpened(popup)) {
+        popup.classList.remove('popup_opened')
+      }
+    })
+  }
+}
+
 loadInitialElements(initialElements)
 
 editProfileButton.addEventListener('click', showProfilePopup)
+editProfilePopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeProfilePopup))
 buttonCloseProfilePopup.addEventListener('click', closeProfilePopup)
-formProfilePopup.addEventListener('submit', handleProfileFormSubmit);
+formProfilePopup.addEventListener('submit', handleProfileFormSubmit)
 
 addElementButton.addEventListener('click', showElementPopup)
+addElementPopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeElementPopup))
 buttonCloseElementPopup.addEventListener('click', closeElementPopup)
 formElementPopup.addEventListener('submit', handleElementFormSubmit)
 
 buttonCloseImagePopup.addEventListener('click', closeImagePopup)
+imagePopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeImagePopup))
+document.addEventListener('keydown', evt => closePopupByEsc(evt))
