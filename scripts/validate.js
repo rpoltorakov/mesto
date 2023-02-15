@@ -1,43 +1,27 @@
 const validationList = {
-  forms: {
-    profileForm: {
-      name: 'edit-profile',
-      form: '.popup__form_target_profile',
-      submitButton: '.popup__save-button_target_profile',
-      inputs: {
-        inputTitleProfilePopup: '.popup__input_target_profile-title',
-        inputSubtitleProfilePopup: '.popup__input_target_profile-subtitle',
-      },
-    },
-    cardForm: {
-      name: 'add-card',
-      form: '.popup__form_target_element',
-      submitButton: '.popup__save-button_target_element',
-      inputs: {
-        inputTitleCardPopup: '.popup__input_target_element-title',
-        inputURLCardPopup: '.popup__input_target_element-image'
-      },
-    },
-  },
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_inactive',
   inputErrorClass: 'popup__input_type_error',
   errorClass: 'popup__input-error_active'
 }
 
-function showInputError(formElement, inputElement, errorMessage, validationList) {
+const showInputError = (formElement, inputElement, errorMessage, validationList) => {
   const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
   inputElement.classList.add(validationList.inputErrorClass);
   errorElement.textContent = errorMessage;
   errorElement.classList.add(validationList.errorClass);
-}
+};
 
-function hideInputError(formElement, inputElement, validationList) {
+const hideInputError = (formElement, inputElement, validationList) => {
   const errorElement = formElement.querySelector(`#${inputElement.name}-error`);
   inputElement.classList.remove(validationList.inputErrorClass);
   errorElement.classList.remove(validationList.errorClass);
-}
+  errorElement.textContent = '';
+};
 
-function checkInputValidity(formElement, inputElement, validationList) {
+const checkInputValidity = (formElement, inputElement, validationList) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, validationList);
   } else {
@@ -59,34 +43,27 @@ function toggleButtonState (inputList, buttonElement, validationList) {
   }
 }
 
-function createDOMElements(Obj) {
-  Object.keys(Obj).forEach(item => {
-    if (typeof Obj[item] === 'string') {
-      if (Obj[item].startsWith('.')) {
-        Obj[item] = document.querySelector(Obj[item])
-      }
-    }
-  })
-}
+const setEventListeners = (formElement, validationList) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
+  const buttonElement = formElement.querySelector('.popup__save-button')
+  toggleButtonState(inputList, buttonElement, validationList)
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(formElement, inputElement, validationList);
+      toggleButtonState(inputList, buttonElement, validationList)
+    });
+  });
+};
 
 function enableValidation(validationList) {
-  const forms = Object.values(validationList.forms)
-  forms.forEach(formObj => {
-    createDOMElements(formObj)
-    createDOMElements(formObj.inputs)
-    let inputElements = Object.values(formObj.inputs)
-    let buttonElement = formObj.submitButton
-    inputElements.forEach(inputElement => {
-      inputElement.addEventListener('input', () => {
-        checkInputValidity(formObj.form, inputElement, validationList)
-        toggleButtonState(inputElements, buttonElement, validationList)
-      })
-    })
-    if (formObj.name === 'add-card') {
-      toggleButtonState(inputElements, buttonElement, validationList)
-    }
-    
-  })
-}
+  const formList = Array.from(document.querySelectorAll(validationList.formSelector));
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+    });
+    const fieldsetList = Array.from(formElement.querySelectorAll('.form__set'))
+    setEventListeners(formElement, validationList)
+  });
+};
 
-enableValidation(validationList)
+enableValidation(validationList); 

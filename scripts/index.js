@@ -7,14 +7,14 @@ const profileSubtitle = document.querySelector('.profile__subtitle')
 const editProfilePopup = document.querySelector('.popup_target_profile')
 const inputTitleProfilePopup = editProfilePopup.querySelector('.popup__input_target_profile-title')
 const inputSubtitleProfilePopup = editProfilePopup.querySelector('.popup__input_target_profile-subtitle')
-const formProfilePopup = document.querySelector('.popup__form_target_profile')
+const formProfilePopup = document.forms['edit-profile']
 const buttonCloseProfilePopup = document.querySelector('.popup__close-button_target_profile')
 
 const addElementButton = document.querySelector('.profile__add-button')
 const addElementPopup = document.querySelector('.popup_target_element')
 const inputTitleElementPopup = addElementPopup.querySelector('.popup__input_target_element-title')
 const inputImageElementPopup = addElementPopup.querySelector('.popup__input_target_element-image')
-const formElementPopup = document.querySelector('.popup__form_target_element')
+const formElementPopup = document.forms['add-element']
 const buttonCloseElementPopup = document.querySelector('.popup__close-button_target_element')
 
 const imagePopup = document.querySelector('.popup_target_image')
@@ -22,19 +22,28 @@ const picImagePopup = imagePopup.querySelector('.popup__image')
 const subtitleImagePopup = imagePopup.querySelector('.popup__subtitle')
 const buttonCloseImagePopup = imagePopup.querySelector('.popup__close-button_target_image')
 
-function openPopup(popupNode) {
-  popupNode.classList.add('popup_opened')
-}
-
 function closePopup(popupNode) {
   popupNode.classList.remove('popup_opened')
+  document.removeEventListener('keydown', closePopupByEsc)
+}
+
+function closePopupByEsc(evt) {
+  if (evt.key==='Escape') {
+    const openedPopup = document.querySelector('.popup_opened')
+    closePopup(openedPopup)
+  }
+}
+
+function openPopup(popupNode) {
+  popupNode.classList.add('popup_opened')
+  document.addEventListener('keydown', closePopupByEsc)
 }
 
 function showImagePopup(evt) {
   openPopup(imagePopup)
   picImagePopup.src = evt.target.src
   picImagePopup.alt = 'Карточка в полный размер'
-  subtitleImagePopup.textContent = evt.target.parentElement.querySelector('.element__title').textContent
+  subtitleImagePopup.textContent = evt.target.closest('.element').querySelector('.element__title').textContent
 }
 function closeImagePopup() {
   closePopup(imagePopup)
@@ -93,9 +102,13 @@ function closeElementPopup() {
 }
 function handleElementFormSubmit (evt) {
   evt.preventDefault()
+  console.log(evt.target)
   renderCard(inputTitleElementPopup.value, inputImageElementPopup.value)
   closeElementPopup();
   formElementPopup.reset()
+  const saveButton = evt.target.querySelector('.popup__save-button')
+  saveButton.disabled = true
+  saveButton.classList.add('popup__save-button_inactive')
 }
 
 function checkTargetIsPopup(evt) {
@@ -107,19 +120,8 @@ function closePopupByOutsideClick(evt, closeFunction) {
   }
 }
 
-function checkPopupOpened(popup) {
-  return Array.from(popup.classList).includes('popup_opened')
-}
-function closePopupByEsc(evt) {
-  if (evt.key==='Escape') {
-    const popups = Array.from(document.querySelectorAll('.popup'))
-    popups.forEach(popup => {
-      if (checkPopupOpened(popup)) {
-        popup.classList.remove('popup_opened')
-      }
-    })
-  }
-}
+
+
 
 loadInitialElements(initialElements)
 
@@ -131,8 +133,8 @@ formProfilePopup.addEventListener('submit', handleProfileFormSubmit)
 addElementButton.addEventListener('click', showElementPopup)
 addElementPopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeElementPopup))
 buttonCloseElementPopup.addEventListener('click', closeElementPopup)
-formElementPopup.addEventListener('submit', handleElementFormSubmit)
+formElementPopup.addEventListener('submit', (evt) => {handleElementFormSubmit(evt)})
 
 buttonCloseImagePopup.addEventListener('click', closeImagePopup)
 imagePopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeImagePopup))
-document.addEventListener('keydown', evt => closePopupByEsc(evt))
+document.addEventListener('keydown', closePopupByEsc)
