@@ -102,11 +102,10 @@ function closeElementPopup() {
 }
 function handleElementFormSubmit (evt) {
   evt.preventDefault()
-  console.log(evt.target)
   renderCard(inputTitleElementPopup.value, inputImageElementPopup.value)
   closeElementPopup();
   formElementPopup.reset()
-  const saveButton = evt.target.querySelector('.popup__save-button')
+  const saveButton = evt.submitter
   saveButton.disabled = true
   saveButton.classList.add('popup__save-button_inactive')
 }
@@ -137,4 +136,3 @@ formElementPopup.addEventListener('submit', (evt) => {handleElementFormSubmit(ev
 
 buttonCloseImagePopup.addEventListener('click', closeImagePopup)
 imagePopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeImagePopup))
-document.addEventListener('keydown', closePopupByEsc)
