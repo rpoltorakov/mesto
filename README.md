@@ -20,10 +20,14 @@
 * Удаление карточки
 * Лайк на карточке
 * Просмотр изображения в полном размере
+* Валидация формы редактирования профиля
+* Валидация формы добавления карточки
+* Закрытие всех попапов кликом по оверлею
+* Закрытие всех попапов кнопкой Escape
 
 ## Figma
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/bjyvbKKJN2naO0ucURl2Z0/JavaScript.-Sprint-5?node-id=0%3A1)
+* [Ссылка на макет в Figma](https://www.figma.com/file/kRVLKwYG3d1HGLvh7JFWRT/JavaScript.-Sprint-6?node-id=0%3A1)
 
 ## Технологии
 
