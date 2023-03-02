@@ -70,4 +70,4 @@ function enableValidation(validationList) {
   });
 };
 
-enableValidation(validationList); 
+enableValidation(validationList);

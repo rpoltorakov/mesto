@@ -1,5 +1,5 @@
-const elementTemplate = document.querySelector('.element-template').content.querySelector('.element')
-const elementsContainer = document.querySelector('.elements')
+const elementTemplate = document.querySelector('.card-template').content.querySelector('.card')
+const elementsContainer = document.querySelector('.cards')
 
 const editProfileButton = document.querySelector('.profile__edit-button')
 const profileTitle = document.querySelector('.profile__title')
@@ -11,11 +11,11 @@ const formProfilePopup = document.forms['edit-profile']
 const buttonCloseProfilePopup = document.querySelector('.popup__close-button_target_profile')
 
 const addElementButton = document.querySelector('.profile__add-button')
-const addElementPopup = document.querySelector('.popup_target_element')
-const inputTitleElementPopup = addElementPopup.querySelector('.popup__input_target_element-title')
-const inputImageElementPopup = addElementPopup.querySelector('.popup__input_target_element-image')
-const formElementPopup = document.forms['add-element']
-const buttonCloseElementPopup = document.querySelector('.popup__close-button_target_element')
+const addElementPopup = document.querySelector('.popup_target_card')
+const inputTitleElementPopup = addElementPopup.querySelector('.popup__input_target_card-title')
+const inputImageElementPopup = addElementPopup.querySelector('.popup__input_target_card-image')
+const formElementPopup = document.forms['add-card']
+const buttonCloseElementPopup = document.querySelector('.popup__close-button_target_card')
 
 const imagePopup = document.querySelector('.popup_target_image')
 const picImagePopup = imagePopup.querySelector('.popup__image')
@@ -43,28 +43,28 @@ function showImagePopup(evt) {
   openPopup(imagePopup)
   picImagePopup.src = evt.target.src
   picImagePopup.alt = 'Карточка в полный размер'
-  subtitleImagePopup.textContent = evt.target.closest('.element').querySelector('.element__title').textContent
+  subtitleImagePopup.textContent = evt.target.closest('.card').querySelector('.card__title').textContent
 }
 function closeImagePopup() {
   closePopup(imagePopup)
 }
 
 function toggleLikeButton(evt) {
-  evt.target.classList.toggle('element__like-button_pressed')
+  evt.target.classList.toggle('card__like-button_pressed')
 }
 
 function removeCard(evt) {
-  evt.target.closest('.element').remove()
+  evt.target.closest('.card').remove()
 }
 function createCard(name, link) {
   const element = elementTemplate.cloneNode(true)
-  element.querySelector('.element__title-text').textContent = name;
-  const elementImage = element.querySelector('.element__image')
+  element.querySelector('.card__title-text').textContent = name;
+  const elementImage = element.querySelector('.card__image')
   elementImage.src = link;
   elementImage.alt = name;
   elementImage.addEventListener('click', showImagePopup)
-  element.querySelector('.element__like-button').addEventListener('click', toggleLikeButton)
-  element.querySelector('.element__delete-button').addEventListener('click', removeCard)
+  element.querySelector('.card__like-button').addEventListener('click', toggleLikeButton)
+  element.querySelector('.card__delete-button').addEventListener('click', removeCard)
   return element
 }
 
