@@ -1,3 +1,6 @@
+import {initialElements} from "./constants.js"
+import {Card} from "./Card.js"
+
 const elementTemplate = document.querySelector('.card-template').content.querySelector('.card')
 const elementsContainer = document.querySelector('.cards')
 
@@ -53,30 +56,36 @@ function toggleLikeButton(evt) {
   evt.target.classList.toggle('card__like-button_pressed')
 }
 
-function removeCard(evt) {
-  evt.target.closest('.card').remove()
-}
-function createCard(name, link) {
-  const element = elementTemplate.cloneNode(true)
-  element.querySelector('.card__title-text').textContent = name;
-  const elementImage = element.querySelector('.card__image')
-  elementImage.src = link;
-  elementImage.alt = name;
-  elementImage.addEventListener('click', showImagePopup)
-  element.querySelector('.card__like-button').addEventListener('click', toggleLikeButton)
-  element.querySelector('.card__delete-button').addEventListener('click', removeCard)
-  return element
-}
+// function removeCard(evt) {
+//   evt.target.closest('.card').remove()
+// }
+// function createCard(name, link) {
+//   const element = elementTemplate.cloneNode(true)
+//   element.querySelector('.card__title-text').textContent = name;
+//   const elementImage = element.querySelector('.card__image')
+//   elementImage.src = link;
+//   elementImage.alt = name;
+//   elementImage.addEventListener('click', showImagePopup)
+//   element.querySelector('.card__like-button').addEventListener('click', toggleLikeButton)
+//   element.querySelector('.card__delete-button').addEventListener('click', removeCard)
+//   return element
+// }
 
-function renderCard(name, link) {
-  const newCard = createCard(name, link)
-  elementsContainer.prepend(newCard);
-}
+// function renderCard(name, link) {
+//   const newCard = createCard(name, link)
+//   elementsContainer.prepend(newCard);
+// }
 
 function loadInitialElements(elements) {
   elements.forEach(item => {
-    renderCard(item.name, item.link)
+    const card = new Card({
+      text: item.name,
+      imageLink: item.link
+    }, '.card-template')
+    const cardd = card.getCard()
+    elementsContainer.prepend(cardd)
   })
+
 }
 
 function showProfilePopup() {
@@ -118,9 +127,6 @@ function closePopupByOutsideClick(evt, closeFunction) {
     closeFunction()
   }
 }
-
-
-
 
 loadInitialElements(initialElements)
 
