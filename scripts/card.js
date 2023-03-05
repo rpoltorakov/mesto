@@ -1,3 +1,14 @@
+import {
+  openPopup,
+  closePopup,
+  closePopupByEsc
+} from './index.js'
+
+const cardPopup = document.querySelector('.popup_target_image')
+const picImagePopup = cardPopup.querySelector('.popup__image')
+const subtitleImagePopup = cardPopup.querySelector('.popup__subtitle')
+const buttonCloseImagePopup = cardPopup.querySelector('.popup__close-button_target_image')
+
 export class Card {
   constructor(data, templateSelector) {
     this._text = data.text;
@@ -10,12 +21,32 @@ export class Card {
     return cardTemplate
   }
 
-  _showImagePopup(evt) {
-    openPopup(imagePopup)
-    picImagePopup.src = evt.target.src
-    picImagePopup.alt = 'Карточка в полный размер'
-    subtitleImagePopup.textContent = evt.target.closest('.card').querySelector('.card__title').textContent
-  }
+  // _closeCardPopup() {
+  //   imagePopup.classList.remove('popup_opened')
+  // }
+
+  // _closeCardPopupByEsc(evt) {
+  //   if (evt.key==='Escape') {
+  //     const openedPopup = document.querySelector('.popup_opened')
+  //     this._closeCardPopup(openedPopup)
+  //   }
+  // }
+
+  // _showCardPopup(evt) {
+  //   const cardImage = evt.target
+  //   picImagePopup.src = cardImage.src
+  //   picImagePopup.alt = 'Карточка в полный размер'
+  //   subtitleImagePopup.textContent = evt.target.closest('.card').querySelector('.card__title').textContent
+  //   imagePopup.classList.add('popup_opened')
+  //   imagePopup.addEventListener('keydown', evt => closePopupByEsc(evt))
+  // }
+
+  _showCardPopup(evt) {
+  openPopup(cardPopup)
+  picImagePopup.src = evt.target.src
+  picImagePopup.alt = 'Карточка в полный размер'
+  subtitleImagePopup.textContent = evt.target.closest('.card').querySelector('.card__title').textContent
+}
 
   _toggleLikeButton(evt) {
     evt.target.classList.toggle('card__like-button_pressed')
@@ -26,9 +57,9 @@ export class Card {
   }
 
   _setEventListeners() {
-    this._card.querySelector('.card__image').addEventListener('click', this._showImagePopup)
-    this._card.querySelector('.card__like-button').addEventListener('click', this._toggleLikeButton)
-    this._card.querySelector('.card__delete-button').addEventListener('click', this._removeCard)
+    this._card.querySelector('.card__image').addEventListener('click', evt => this._showCardPopup(evt))
+    this._card.querySelector('.card__like-button').addEventListener('click', evt => this._toggleLikeButton(evt))
+    this._card.querySelector('.card__delete-button').addEventListener('click', evt => this._removeCard(evt))
   }
 
   _createCard() {

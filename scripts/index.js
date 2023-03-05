@@ -13,10 +13,10 @@ const inputSubtitleProfilePopup = editProfilePopup.querySelector('.popup__input_
 const formProfilePopup = document.forms['edit-profile']
 const buttonCloseProfilePopup = document.querySelector('.popup__close-button_target_profile')
 
-const addElementButton = document.querySelector('.profile__add-button')
-const addElementPopup = document.querySelector('.popup_target_card')
-const inputTitleElementPopup = addElementPopup.querySelector('.popup__input_target_card-title')
-const inputImageElementPopup = addElementPopup.querySelector('.popup__input_target_card-image')
+const addCardButton = document.querySelector('.profile__add-button')
+const addCardPopup = document.querySelector('.popup_target_card')
+const inputTitleElementPopup = addCardPopup.querySelector('.popup__input_target_card-title')
+const inputImageElementPopup = addCardPopup.querySelector('.popup__input_target_card-image')
 const formElementPopup = document.forms['add-card']
 const buttonCloseElementPopup = document.querySelector('.popup__close-button_target_card')
 
@@ -25,40 +25,34 @@ const picImagePopup = imagePopup.querySelector('.popup__image')
 const subtitleImagePopup = imagePopup.querySelector('.popup__subtitle')
 const buttonCloseImagePopup = imagePopup.querySelector('.popup__close-button_target_image')
 
-function closePopup(popupNode) {
+export function closePopup(popupNode) {
   popupNode.classList.remove('popup_opened')
   document.removeEventListener('keydown', closePopupByEsc)
 }
 
-function closePopupByEsc(evt) {
-  if (evt.key==='Escape') {
+export function closePopupByEsc(evt) {
+  if (evt.key==='Escape' || evt.key==='Esc') {
     const openedPopup = document.querySelector('.popup_opened')
     closePopup(openedPopup)
   }
 }
 
-function openPopup(popupNode) {
-  popupNode.classList.add('popup_opened')
+export function openPopup(popupElement) {
+  popupElement.classList.add('popup_opened')
   document.addEventListener('keydown', closePopupByEsc)
 }
 
-function showImagePopup(evt) {
-  openPopup(imagePopup)
-  picImagePopup.src = evt.target.src
-  picImagePopup.alt = 'Карточка в полный размер'
-  subtitleImagePopup.textContent = evt.target.closest('.card').querySelector('.card__title').textContent
-}
+// function showImagePopup(evt) {
+//   openPopup(imagePopup)
+//   picImagePopup.src = evt.target.src
+//   picImagePopup.alt = 'Карточка в полный размер'
+//   subtitleImagePopup.textContent = evt.target.closest('.card').querySelector('.card__title').textContent
+// }
+
 function closeImagePopup() {
   closePopup(imagePopup)
 }
 
-function toggleLikeButton(evt) {
-  evt.target.classList.toggle('card__like-button_pressed')
-}
-
-// function removeCard(evt) {
-//   evt.target.closest('.card').remove()
-// }
 // function createCard(name, link) {
 //   const element = elementTemplate.cloneNode(true)
 //   element.querySelector('.card__title-text').textContent = name;
@@ -103,16 +97,16 @@ function handleProfileFormSubmit (evt) {
   closeProfilePopup()
 }
 
-function showElementPopup() {
-  openPopup(addElementPopup)
+function showAddCardPopup() {
+  openPopup(addCardPopup)
 }
-function closeElementPopup() {
-  closePopup(addElementPopup)
+function closeAddCardPopup() {
+  closePopup(addCardPopup)
 }
 function handleElementFormSubmit (evt) {
   evt.preventDefault()
   renderCard(inputTitleElementPopup.value, inputImageElementPopup.value)
-  closeElementPopup();
+  closeAddCardPopup();
   formElementPopup.reset()
   const saveButton = evt.submitter
   saveButton.disabled = true
@@ -135,10 +129,10 @@ editProfilePopup.addEventListener('click', evt => closePopupByOutsideClick(evt, 
 buttonCloseProfilePopup.addEventListener('click', closeProfilePopup)
 formProfilePopup.addEventListener('submit', handleProfileFormSubmit)
 
-addElementButton.addEventListener('click', showElementPopup)
-addElementPopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeElementPopup))
-buttonCloseElementPopup.addEventListener('click', closeElementPopup)
-formElementPopup.addEventListener('submit', (evt) => {handleElementFormSubmit(evt)})
+addCardButton.addEventListener('click', showAddCardPopup)
+addCardPopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeAddCardPopup))
+// buttonCloseElementPopup.addEventListener('click', closeElementPopup)
+// formElementPopup.addEventListener('submit', (evt) => {handleElementFormSubmit(evt)})
 
 buttonCloseImagePopup.addEventListener('click', closeImagePopup)
 imagePopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeImagePopup))
