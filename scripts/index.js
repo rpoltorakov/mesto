@@ -1,8 +1,11 @@
-import {initialElements} from "./constants.js"
+import {
+  initialCards,
+  validationList
+} from "./constants.js"
 import {Card} from "./Card.js"
+import { FormValidator } from "./FormValidator.js"
 
-const elementTemplate = document.querySelector('.card-template').content.querySelector('.card')
-const elementsContainer = document.querySelector('.cards')
+const cardsContainer = document.querySelector('.cards')
 
 const editProfileButton = document.querySelector('.profile__edit-button')
 const profileTitle = document.querySelector('.profile__title')
@@ -10,19 +13,17 @@ const profileSubtitle = document.querySelector('.profile__subtitle')
 const editProfilePopup = document.querySelector('.popup_target_profile')
 const inputTitleProfilePopup = editProfilePopup.querySelector('.popup__input_target_profile-title')
 const inputSubtitleProfilePopup = editProfilePopup.querySelector('.popup__input_target_profile-subtitle')
-const formProfilePopup = document.forms['edit-profile']
+const formEditProfilePopup = document.forms['edit-profile']
 const buttonCloseProfilePopup = document.querySelector('.popup__close-button_target_profile')
 
 const addCardButton = document.querySelector('.profile__add-button')
 const addCardPopup = document.querySelector('.popup_target_card')
-const inputTitleElementPopup = addCardPopup.querySelector('.popup__input_target_card-title')
-const inputImageElementPopup = addCardPopup.querySelector('.popup__input_target_card-image')
-const formElementPopup = document.forms['add-card']
-const buttonCloseElementPopup = document.querySelector('.popup__close-button_target_card')
+const inputTitleAddCardPopup = addCardPopup.querySelector('.popup__input_target_card-title')
+const inputImageLinkAddCardPopup = addCardPopup.querySelector('.popup__input_target_card-image')
+const formAddCardPopup = document.forms['add-card']
+const buttonCloseAddCardPopup = addCardPopup.querySelector('.popup__close-button_target_card')
 
 const imagePopup = document.querySelector('.popup_target_image')
-const picImagePopup = imagePopup.querySelector('.popup__image')
-const subtitleImagePopup = imagePopup.querySelector('.popup__subtitle')
 const buttonCloseImagePopup = imagePopup.querySelector('.popup__close-button_target_image')
 
 export function closePopup(popupNode) {
@@ -42,42 +43,18 @@ export function openPopup(popupElement) {
   document.addEventListener('keydown', closePopupByEsc)
 }
 
-// function showImagePopup(evt) {
-//   openPopup(imagePopup)
-//   picImagePopup.src = evt.target.src
-//   picImagePopup.alt = 'Карточка в полный размер'
-//   subtitleImagePopup.textContent = evt.target.closest('.card').querySelector('.card__title').textContent
-// }
-
 function closeImagePopup() {
   closePopup(imagePopup)
 }
 
-// function createCard(name, link) {
-//   const element = elementTemplate.cloneNode(true)
-//   element.querySelector('.card__title-text').textContent = name;
-//   const elementImage = element.querySelector('.card__image')
-//   elementImage.src = link;
-//   elementImage.alt = name;
-//   elementImage.addEventListener('click', showImagePopup)
-//   element.querySelector('.card__like-button').addEventListener('click', toggleLikeButton)
-//   element.querySelector('.card__delete-button').addEventListener('click', removeCard)
-//   return element
-// }
-
-// function renderCard(name, link) {
-//   const newCard = createCard(name, link)
-//   elementsContainer.prepend(newCard);
-// }
-
-function loadInitialElements(elements) {
+function loadInitialCards(elements) {
   elements.forEach(item => {
     const card = new Card({
       text: item.name,
       imageLink: item.link
     }, '.card-template')
     const cardd = card.getCard()
-    elementsContainer.prepend(cardd)
+    cardsContainer.prepend(cardd)
   })
 
 }
@@ -103,11 +80,15 @@ function showAddCardPopup() {
 function closeAddCardPopup() {
   closePopup(addCardPopup)
 }
-function handleElementFormSubmit (evt) {
+function handleAddCardFormSubmit (evt) {
   evt.preventDefault()
-  renderCard(inputTitleElementPopup.value, inputImageElementPopup.value)
+  const newCard = new Card({
+    text: inputTitleAddCardPopup.value, 
+    imageLink: inputImageLinkAddCardPopup.value
+  }, '.card-template')
+  cardsContainer.prepend(newCard.getCard())
   closeAddCardPopup();
-  formElementPopup.reset()
+  formAddCardPopup.reset()
   const saveButton = evt.submitter
   saveButton.disabled = true
   saveButton.classList.add('popup__save-button_inactive')
@@ -122,17 +103,22 @@ function closePopupByOutsideClick(evt, closeFunction) {
   }
 }
 
-loadInitialElements(initialElements)
+loadInitialCards(initialCards)
+const firstform = new FormValidator(validationList, formEditProfilePopup)
+firstform.enableValidation()
+
+const secondform = new FormValidator(validationList, formAddCardPopup)
+secondform.enableValidation()
 
 editProfileButton.addEventListener('click', showProfilePopup)
 editProfilePopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeProfilePopup))
 buttonCloseProfilePopup.addEventListener('click', closeProfilePopup)
-formProfilePopup.addEventListener('submit', handleProfileFormSubmit)
+formEditProfilePopup.addEventListener('submit', handleProfileFormSubmit)
 
 addCardButton.addEventListener('click', showAddCardPopup)
 addCardPopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeAddCardPopup))
-// buttonCloseElementPopup.addEventListener('click', closeElementPopup)
-// formElementPopup.addEventListener('submit', (evt) => {handleElementFormSubmit(evt)})
+buttonCloseAddCardPopup.addEventListener('click', closeAddCardPopup)
+formAddCardPopup.addEventListener('submit', (evt) => {handleAddCardFormSubmit(evt)})
 
 buttonCloseImagePopup.addEventListener('click', closeImagePopup)
 imagePopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeImagePopup))
