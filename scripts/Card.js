@@ -18,35 +18,38 @@ export class Card {
     return cardTemplate
   }
 
-  _showCardPopup(evt) {
+  _showCardPopup() {
   openPopup(cardPopup)
-  picImagePopup.src = evt.target.src
+  picImagePopup.src = this._imageLink
   picImagePopup.alt = 'Карточка в полный размер'
-  subtitleImagePopup.textContent = evt.target.closest('.card').querySelector('.card__title').textContent
+  subtitleImagePopup.textContent = this._card.querySelector('.card__title').textContent
 }
 
-  _toggleLikeButton(evt) {
-    evt.target.classList.toggle('card__like-button_pressed')
+  _toggleLikeButton() {
+    this._likeButton.classList.toggle('card__like-button_pressed')
   }
 
-  _removeCard(evt) {
-    evt.target.closest('.card').remove()
+  _removeCard() {
+    this._card.remove()
+    this._card = null
   }
 
   _setEventListeners() {
-    this._card.querySelector('.card__image').addEventListener('click', evt => this._showCardPopup(evt))
-    this._card.querySelector('.card__like-button').addEventListener('click', evt => this._toggleLikeButton(evt))
-    this._card.querySelector('.card__delete-button').addEventListener('click', evt => this._removeCard(evt))
+    this._cardImage.addEventListener('click', evt => this._showCardPopup(evt))
+    this._likeButton.addEventListener('click', evt => this._toggleLikeButton(evt))
+    this._deleteButton.addEventListener('click', evt => this._removeCard(evt))
   }
 
   _createCard() {
     this._card = this._getCardTemplate()
-    this._card.querySelector('.card__title-text').textContent = this._text
-    this._card.querySelector('.card__image').src = this._imageLink
-    this._card.querySelector('.card__image').alt = this._text
-    
+    this._cardImage = this._card.querySelector('.card__image')
+    this._cardText = this._card.querySelector('.card__title-text')
+    this._likeButton = this._card.querySelector('.card__like-button')
+    this._deleteButton = this._card.querySelector('.card__delete-button')
+    this._cardImage.src = this._imageLink
+    this._cardImage.alt = this._text
+    this._cardText.textContent = this._text
     this._setEventListeners()
-
     return this._card
   }
 

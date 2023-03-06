@@ -47,14 +47,18 @@ function closeImagePopup() {
   closePopup(imagePopup)
 }
 
+function createCard(data) {
+  const card = new Card({
+    text: data.name,
+    imageLink: data.link
+  }, '.card-template')
+  return card.getCard()
+}
+
 function loadInitialCards(elements) {
   elements.forEach(item => {
-    const card = new Card({
-      text: item.name,
-      imageLink: item.link
-    }, '.card-template')
-    const cardd = card.getCard()
-    cardsContainer.prepend(cardd)
+    const card = createCard(item)
+    cardsContainer.prepend(card)
   })
 
 }
@@ -82,33 +86,29 @@ function closeAddCardPopup() {
 }
 function handleAddCardFormSubmit (evt) {
   evt.preventDefault()
-  const newCard = new Card({
-    text: inputTitleAddCardPopup.value, 
-    imageLink: inputImageLinkAddCardPopup.value
-  }, '.card-template')
-  cardsContainer.prepend(newCard.getCard())
+  const newCard = createCard({
+    name: inputTitleAddCardPopup.value,
+    link: inputImageLinkAddCardPopup.value
+  })
+  cardsContainer.prepend(newCard)
   closeAddCardPopup();
   formAddCardPopup.reset()
-  const saveButton = evt.submitter
-  saveButton.disabled = true
-  saveButton.classList.add('popup__save-button_inactive')
+  addCardValidator.toggleButtonState()
 }
 
-function checkTargetIsPopup(evt) {
-  return Array.from(evt.target.classList).includes('popup')
-}
 function closePopupByOutsideClick(evt, closeFunction) {
-  if (checkTargetIsPopup(evt)) {
+  if (evt.target.classList.contains('popup')) {
     closeFunction()
   }
 }
 
 loadInitialCards(initialCards)
-const firstform = new FormValidator(validationList, formEditProfilePopup)
-firstform.enableValidation()
 
-const secondform = new FormValidator(validationList, formAddCardPopup)
-secondform.enableValidation()
+const editProfileValidator = new FormValidator(validationList, formEditProfilePopup)
+editProfileValidator.enableValidation()
+
+const addCardValidator = new FormValidator(validationList, formAddCardPopup)
+addCardValidator.enableValidation()
 
 editProfileButton.addEventListener('click', showProfilePopup)
 editProfilePopup.addEventListener('click', evt => closePopupByOutsideClick(evt, closeProfilePopup))
