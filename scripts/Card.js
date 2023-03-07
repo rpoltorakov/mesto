@@ -22,7 +22,7 @@ export class Card {
   openPopup(cardPopup)
   picImagePopup.src = this._imageLink
   picImagePopup.alt = 'Карточка в полный размер'
-  subtitleImagePopup.textContent = this._card.querySelector('.card__title').textContent
+  subtitleImagePopup.textContent = this._text
 }
 
   _toggleLikeButton() {
