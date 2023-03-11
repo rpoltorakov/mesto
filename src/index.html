@@ -10,11 +10,11 @@
 <body class="root">
   <div class="page">
     <header class="header">
-      <img class="header__logo" src="./images/logo.svg" alt="Проект Место">
+      <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Проект Место">
     </header>
     <main class="content">
       <section class="profile">
-        <img src="./images/kusto-profile-pic.png" alt="Аватар" class="profile__avatar">
+        <img src="<%=require('./images/kusto-profile-pic.png')%>" alt="Аватар" class="profile__avatar">
         <href class="profile__profile-info">
           <div class="profile__title-container">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -72,7 +72,7 @@
           <h3 class="card__title-text"></h3>
           <button class="card__like-button" type="button" aria-label="Лайк"></button>
         </div>
-        <img src="./images/trash.svg" alt="Удалить" class="card__delete-button">
+        <img src="<%=require('./images/trash.svg')%>" alt="Удалить" class="card__delete-button">
       </div>
     </template>
   </div>
