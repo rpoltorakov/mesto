@@ -1,29 +1,15 @@
-import {
-  openPopup,
-} from './index.js'
-
-const cardPopup = document.querySelector('.popup_target_image')
-const picImagePopup = cardPopup.querySelector('.popup__image')
-const subtitleImagePopup = cardPopup.querySelector('.popup__subtitle')
-
 export class Card {
-  constructor(data, templateSelector) {
-    this._text = data.text;
-    this._imageLink = data.imageLink
+  constructor({ text, imageLink, handleCardClick }, templateSelector) {
+    this._text = text;
+    this._imageLink = imageLink
     this._templateSelector = templateSelector
+    this._handleCardCLick = handleCardClick
   }
 
   _getCardTemplate() {
     const cardTemplate = document.querySelector(this._templateSelector).content.querySelector('.card').cloneNode(true)
     return cardTemplate
   }
-
-  _showCardPopup() {
-  openPopup(cardPopup)
-  picImagePopup.src = this._imageLink
-  picImagePopup.alt = 'Карточка в полный размер'
-  subtitleImagePopup.textContent = this._text
-}
 
   _toggleLikeButton() {
     this._likeButton.classList.toggle('card__like-button_pressed')
@@ -35,7 +21,7 @@ export class Card {
   }
 
   _setEventListeners() {
-    this._cardImage.addEventListener('click', evt => this._showCardPopup(evt))
+    this._cardImage.addEventListener('click', () => this._handleCardCLick())
     this._likeButton.addEventListener('click', evt => this._toggleLikeButton(evt))
     this._deleteButton.addEventListener('click', evt => this._removeCard(evt))
   }
