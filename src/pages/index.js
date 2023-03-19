@@ -33,10 +33,10 @@ const popupCard = new PopupWithImage('.popup_target_image')
 
 function createCard(data) {
   const card = new Card({
-    text: data.text,
-    imageLink: data.imageLink,
+    name: data.name,
+    link: data.link,
     handleCardClick: () => {
-      popupCard.open(data.text, data.imageLink)
+      popupCard.open(data.name, data.link)
     }
   }, '.card-template')
   return card.getCard()
@@ -65,9 +65,7 @@ const cardsSection = new Section({
 }, '.cards')
 cardsSection.renderItems()
 
-addCardButton.addEventListener('click', () => {
-  popupAddCard.open()
-})
+
 
 popupCard.setEventListeners()
 popupEditProfile.setEventListeners()
@@ -78,3 +76,8 @@ editProfileValidator.enableValidation()
 
 const addCardValidator = new FormValidator(validationList, formAddCardPopup)
 addCardValidator.enableValidation()
+
+addCardButton.addEventListener('click', () => {
+  addCardValidator.toggleButtonState()
+  popupAddCard.open()
+})
