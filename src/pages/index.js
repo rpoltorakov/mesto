@@ -26,7 +26,8 @@ const profile = new UserInfo({
 
 const popupEditProfile = new PopupWithForm({
   popupSelector: '.popup_target_profile',
-  callbackSubmit: inputValues => profile.setUserInfo(inputValues)
+  callbackSubmit: inputValues => profile.setUserInfo(inputValues),
+  resetInputErrors: () => editProfileValidator.resetInputErrors()
 })
 
 const popupCard = new PopupWithImage('.popup_target_image')
@@ -42,12 +43,14 @@ function createCard(data) {
   return card.getCard()
 }
 
+
 const popupAddCard = new PopupWithForm({
   popupSelector: '.popup_target_card',
   callbackSubmit: data => {
     const newCard = createCard(data)
     cardsSection.addItem(newCard)
-  }
+  },
+  resetInputErrors: () => addCardValidator.resetInputErrors()
 })
 
 editProfileButton.addEventListener('click', () => {
