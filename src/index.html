@@ -73,7 +73,7 @@
 
     <div class="popup popup_target_delete-confirm">
       <div class="popup__container">
-        <button class="popup__close-button" type="button" aria-label=Закрыть"> </button>
+        <button type="button" class="popup__close-button" aria-label=Закрыть"></button>
         <h2 class="popup__header">Вы уверены?</h2>
         <form class="popup__form popup__form_target_delete-confirm" name="delete-confirm" novalidate>
           <button class="popup__save-button popup__save-button_target_delete-confirm" type="submit" aria-label="Сохранить">Да</button>
@@ -83,10 +83,10 @@
     
     <div class="popup popup_target_change-avatar">
       <div class="popup__container">
-        <button class="popup__close-button" type="button" aria-label=Закрыть"> </button>
+        <button type="button" class="popup__close-button" aria-label=Закрыть"> </button>
         <h2 class="popup__header">Обновить аватар</h2>
         <form class="popup__form popup__form_target_change-avatar" name="change-avatar" novalidate>
-          <input name="avatar" class="popup__input popup__input_target_avatar" placeholder="Ссылка на картинку" type="url" required minlength="2" maxlength="200" required>
+          <input name="avatar" class="popup__input popup__input_target_avatar" placeholder="Ссылка на картинку" type="url" required minlength="2" maxlength="200">
           <span class="popup__input-error" id="avatar-error">Error</span>
           <button class="popup__save-button popup__save-button_target_change-avatar" aria-label="Сохранить">Сохранить</button>
         </form>
