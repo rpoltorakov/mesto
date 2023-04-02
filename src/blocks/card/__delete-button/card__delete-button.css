@@ -4,6 +4,7 @@
   top: 20px;
   cursor: pointer;
   transition: opacity .1s ease-in-out;
+  visibility: hidden;
 }
 
 .card__delete-button:hover {
