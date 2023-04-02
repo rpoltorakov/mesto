@@ -45,11 +45,15 @@ let targetCard
 const popupEditProfile = new PopupWithForm({
   popupSelector: '.popup_target_profile',
   callbackSubmit: inputValues => {
-    api.setUserInfo(inputValues)
+    renderLoad(true, formEditProfilePopup, 'Сохранение...', 'Сохранить')
+    api.setUserInfo({name: inputValues['name-profile'], about: inputValues.about})
     .then(data => {
       profile.setUserInfo(data)
     })
     .catch(error => {console.error(error)})
+    .finally(() => {
+      renderLoad(false, formEditProfilePopup, 'Сохранение...', 'Сохранить')
+    })
   },
   resetInputErrors: () => editProfileValidator.resetInputErrors()
 })
