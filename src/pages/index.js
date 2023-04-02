@@ -7,7 +7,7 @@ import { PopupWithImage } from "../components/PopupWithImage.js"
 import {Section} from "../components/Section.js"
 import '../pages/index.css'
 import { Api } from "../components/Api.js"
-import { PopupWithOnlyButton } from "../components/PopupWithOnlyButton.js"
+import { PopupWithConfirmation } from "../components/PopupWithConfirmation.js"
 import { renderLoad } from "../utils/utils.js"
 
 const editProfileButton = document.querySelector('.profile__edit-button')
@@ -49,6 +49,7 @@ const popupEditProfile = new PopupWithForm({
     api.setUserInfo({name: inputValues['name-profile'], about: inputValues.about})
     .then(data => {
       profile.setUserInfo(data)
+      popupEditProfile.close()
     })
     .catch(error => {console.error(error)})
     .finally(() => {
@@ -99,6 +100,7 @@ const popupAddCard = new PopupWithForm({
     .then(data => {
       const newCard = createCard(data)
       cardsSection.addItem(newCard)
+      popupAddCard.close()
     })
     .catch((error) => {console.error(error)})
     .finally(() => {
@@ -108,7 +110,7 @@ const popupAddCard = new PopupWithForm({
   resetInputErrors: () => addCardValidator.resetInputErrors()
 })
 
-const popupDeleteConfirm = new PopupWithOnlyButton({
+const popupDeleteConfirm = new PopupWithConfirmation({
   popupSelector: '.popup_target_delete-confirm',
   callbackSubmit: data => {
     renderLoad(true, formConfirmDeleteCard, 'Сохранение...', 'Да')
@@ -155,6 +157,7 @@ const popupChangeAvatar = new PopupWithForm({
     api.changeAvatar(avatar)
     .then(data => {
       profile.setUserAvatar(data.avatar)
+      popupChangeAvatar.close()
     })
     .catch(error => {console.error(error)})
     .finally(() => {
@@ -181,6 +184,7 @@ changeAvatarValidator.enableValidation()
 
 const changeAvatarButton = document.querySelector('.profile__avatar-wrapper')
 changeAvatarButton.addEventListener('click', () => {
+  changeAvatarValidator.toggleButtonState()
   popupChangeAvatar.open()
 })
 

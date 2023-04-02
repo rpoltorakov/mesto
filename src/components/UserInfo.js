@@ -17,8 +17,10 @@ export class UserInfo{
   }
 
   setUserInfo(data) {
-    this._nameElement.textContent = data.name
-    this._aboutElement.textContent = data.about
-    this.setUserAvatar(data.avatar)
+    if (data.name && data.avatar && data.about) {
+      this._nameElement.textContent = data.name
+      this._aboutElement.textContent = data.about
+      this.setUserAvatar(data.avatar)
+    }
   }
 }

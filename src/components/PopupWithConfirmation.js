@@ -1,6 +1,6 @@
 import { Popup } from "./Popup";
 
-export class PopupWithOnlyButton extends Popup {
+export class PopupWithConfirmation extends Popup {
   constructor({popupSelector, callbackSubmit}) {
     super(popupSelector)
     this._callbackSubmit = callbackSubmit
